@@ -4,20 +4,17 @@ namespace Alura\Calisthenics\Domain\Video;
 
 class Video
 {
-    public const PUBLIC = 1;
-    public const PRIVATE = 2;
-
-    private int $visibility = self::PRIVATE;
+    private bool $isVisible = false;
     private int $ageLimit;
 
     public function publish(): void
     {
-        $this->visibility = self::PUBLIC;
+        $this->isVisible = true;
     }
 
-    public function getVisibility(): int
+    public function isPublic(): bool
     {
-        return $this->visibility;
+        return $this->isVisible;
     }
 
     public function getAgeLimit(): int
