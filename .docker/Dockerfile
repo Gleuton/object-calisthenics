@@ -1,0 +1,12 @@
+FROM php:7.4-fpm
+RUN apt-get update
+RUN apt-get install -y openssl
+RUN docker-php-ext-install pdo_mysql bcmath
+RUN pecl install ds && docker-php-ext-enable ds
+#xdebug
+RUN pecl install xdebug && docker-php-ext-enable xdebug
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+WORKDIR /var/www
+
+EXPOSE 9000

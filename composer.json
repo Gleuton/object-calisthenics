@@ -1,16 +1,23 @@
 {
-    "autoload": {
-        "psr-4": {
-            "Alura\\Calisthenics\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Alura\\Calisthenics\\Tests\\": "tests/"
-        }
-    },
-    "require": {
-        "ext-ds": "*",
-        "phpunit/phpunit": "^9"
+  "name": "alura/alisthenics",
+  "description": "",
+  "autoload": {
+    "psr-4": {
+      "Alura\\Calisthenics\\": "src/"
     }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Alura\\Calisthenics\\Tests\\": "tests/"
+    }
+  },
+  "require": {
+    "php": "^7.4",
+    "ext-ds": "*"
+  }
+  ,
+  "require-dev": {
+    "phpunit/phpunit": "^9",
+    "roave/security-advisories": "dev-master"
+  }
 }
