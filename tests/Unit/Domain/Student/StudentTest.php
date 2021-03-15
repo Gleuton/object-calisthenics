@@ -26,12 +26,12 @@ class StudentTest extends TestCase
         );
     }
 
-    public function testStudentWithoutWatchedVideosHasAccess()
+    public function testStudentWithoutWatchedVideosHasAccess(): void
     {
         self::assertTrue($this->student->hasAccess());
     }
 
-    public function testStudentWithFirstWatchedVideoInLessThan90DaysHasAccess()
+    public function testStudentWithFirstWatchedVideoInLessThan90DaysHasAccess(): void
     {
         $date = new \DateTimeImmutable('89 days');
         $this->student->watch(new Video(), $date);
@@ -39,7 +39,7 @@ class StudentTest extends TestCase
         self::assertTrue($this->student->hasAccess());
     }
 
-    public function testStudentWithFirstWatchedVideoInLessThan90DaysButOtherVideosWatchedHasAccess()
+    public function testStudentWithFirstWatchedVideoInLessThan90DaysButOtherVideosWatchedHasAccess(): void
     {
         $this->student->watch(new Video(), new \DateTimeImmutable('-89 days'));
         $this->student->watch(new Video(), new \DateTimeImmutable('-60 days'));
@@ -48,7 +48,7 @@ class StudentTest extends TestCase
         self::assertTrue($this->student->hasAccess());
     }
 
-    public function testStudentWithFirstWatchedVideoIn90DaysDoesntHaveAccess()
+    public function testStudentWithFirstWatchedVideoIn90DaysDoesntHaveAccess(): void
     {
         $date = new \DateTimeImmutable('-90 days');
         $this->student->watch(new Video(), $date);
@@ -56,7 +56,7 @@ class StudentTest extends TestCase
         self::assertFalse($this->student->hasAccess());
     }
 
-    public function testStudentWithFirstWatchedVideoIn90DaysButOtherVideosWatchedDoesntHaveAccess()
+    public function testStudentWithFirstWatchedVideoIn90DaysButOtherVideosWatchedDoesntHaveAccess(): void
     {
         $this->student->watch(new Video(), new \DateTimeImmutable('-90 days'));
         $this->student->watch(new Video(), new \DateTimeImmutable('-60 days'));
