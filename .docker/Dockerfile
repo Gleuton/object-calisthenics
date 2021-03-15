@@ -1,6 +1,6 @@
-FROM php:7.4-fpm
+FROM php:8.0-fpm
 RUN apt-get update
-RUN apt-get install -y openssl
+RUN apt-get install -y openssl git
 RUN docker-php-ext-install pdo_mysql bcmath
 RUN pecl install ds && docker-php-ext-enable ds
 RUN pecl install xdebug && docker-php-ext-enable xdebug

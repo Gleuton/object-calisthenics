@@ -20,19 +20,29 @@ class Student
     public string $state;
     public string $country;
 
-    public function __construct(string $email, DateTimeInterface $bd, string $fName, string $lName, string $street, string $number, string $province, string $city, string $state, string $country)
-    {
+    public function __construct(
+        string $email,
+        DateTimeInterface $bd,
+        string $fName,
+        string $lName,
+        string $street,
+        string $number,
+        string $province,
+        string $city,
+        string $state,
+        string $country
+    ) {
         $this->watchedVideos = new Map();
         $this->setEmail($email);
-        $this->bd = $bd;
-        $this->fName = $fName;
-        $this->lName = $lName;
-        $this->street = $street;
-        $this->number = $number;
+        $this->bd       = $bd;
+        $this->fName    = $fName;
+        $this->lName    = $lName;
+        $this->street   = $street;
+        $this->number   = $number;
         $this->province = $province;
-        $this->city = $city;
-        $this->state = $state;
-        $this->country = $country;
+        $this->city     = $city;
+        $this->state    = $state;
+        $this->country  = $country;
     }
 
     public function getFullName(): string
@@ -40,7 +50,7 @@ class Student
         return "{$this->fName} {$this->lName}";
     }
 
-    private function setEmail(string $email)
+    private function setEmail(string $email): void
     {
         if (filter_var($email, FILTER_VALIDATE_EMAIL) !== false) {
             $this->email = $email;
@@ -59,7 +69,7 @@ class Student
         return $this->bd;
     }
 
-    public function watch(Video $video, DateTimeInterface $date)
+    public function watch(Video $video, DateTimeInterface $date): void
     {
         $this->watchedVideos->put($video, $date);
     }
@@ -67,18 +77,24 @@ class Student
     public function hasAccess(): bool
     {
         if ($this->watchedVideos->count() > 0) {
-            $this->watchedVideos->sort(fn (DateTimeInterface $dateA, DateTimeInterface $dateB) => $dateA <=> $dateB);
-            /** @var DateTimeInterface $firstDate */
-            $firstDate = $this->watchedVideos->first()->value;
-            $today = new \DateTimeImmutable();
-
-            if ($firstDate->diff($today)->days >= 90) {
-                return false;
-            } else {
-                return true;
-            }
-        } else {
-            return true;
+            return !$this->firstVideoWasWatchedInMoreThan90Days();
         }
+        return true;
+    }
+
+    /**
+     * @return bool
+     */
+    public function firstVideoWasWatchedInMoreThan90Days(): bool
+    {
+        $this->watchedVideos->sort(
+            fn(DateTimeInterface $dateA, DateTimeInterface $dateB) => $dateA <=>
+                $dateB
+        );
+        /** @var DateTimeInterface $firstDate */
+        $firstDate = $this->watchedVideos->first()->value;
+        $today     = new \DateTimeImmutable();
+
+        return $firstDate->diff($today)->days >= 90;
     }
 }
