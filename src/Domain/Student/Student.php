@@ -4,15 +4,15 @@ namespace Alura\Calisthenics\Domain\Student;
 
 use Alura\Calisthenics\Domain\Email\Email;
 use Alura\Calisthenics\Domain\Video\Video;
+use Alura\Calisthenics\Domain\Video\WatchedVideos;
 use DateTimeImmutable;
 use DateTimeInterface;
-use Ds\Map;
 
 class Student
 {
     private Email $email;
     private DateTimeInterface $bd;
-    private Map $watchedVideos;
+    private WatchedVideos $watchedVideos;
     private string $fName;
     private string $lName;
     public string $street;
@@ -34,7 +34,7 @@ class Student
         string $state,
         string $country
     ) {
-        $this->watchedVideos = new Map();
+        $this->watchedVideos = new WatchedVideos();
         $this->email         = $email;
         $this->bd            = $bd;
         $this->fName         = $fName;
@@ -64,7 +64,7 @@ class Student
 
     public function watch(Video $video, DateTimeInterface $date): void
     {
-        $this->watchedVideos->put($video, $date);
+        $this->watchedVideos->add($video, $date);
     }
 
     public function hasAccess(): bool
@@ -72,12 +72,8 @@ class Student
         if ($this->watchedVideos->count() === 0) {
             return true;
         }
-        $this->watchedVideos->sort(
-            fn(DateTimeInterface $dateA, DateTimeInterface $dateB) => $dateA <=>
-                $dateB
-        );
-        /** @var DateTimeInterface $firstDate */
-        $firstDate = $this->watchedVideos->first()->value;
+
+        $firstDate = $this->watchedVideos->dateOfFistVideo();
         $today     = new DateTimeImmutable();
 
         return $firstDate->diff($today)->days < 90;
