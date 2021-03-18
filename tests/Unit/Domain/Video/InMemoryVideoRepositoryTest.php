@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 class InMemoryVideoRepositoryTest extends TestCase
 {
-    public function testFindingVideosForAStudentMustFilterAgeLimit()
+    public function testFindingVideosForAStudentMustFilterAgeLimit(): void
     {
         $repository = new InMemoryVideoRepository();
 
@@ -21,7 +21,9 @@ class InMemoryVideoRepositoryTest extends TestCase
         }
 
         $student = $this->createStub(Student::class);
-        $student->method('getBd')->willReturn(new \DateTimeImmutable('-19 years'));
+        $student->method('getBd')->willReturn(
+            new \DateTimeImmutable('-19 years')
+        );
 
         $videoList = $repository->videosFor($student);
 
