@@ -11,7 +11,9 @@ class VideosList implements Countable
 
     public function __construct(array $videos = [])
     {
-        $this->videos = $videos;
+        foreach ($videos as $video){
+            $this->add($video);
+        }
     }
 
     public function add(Video $video): VideosList
