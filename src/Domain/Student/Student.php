@@ -13,8 +13,8 @@ class Student
     private Email $email;
     private DateTimeInterface $birthDate;
     private WatchedVideos $watchedVideos;
-    private string $fName;
-    private string $lName;
+    private string $firstName;
+    private string $lastName;
     public string $street;
     public string $number;
     public string $province;
@@ -25,8 +25,8 @@ class Student
     public function __construct(
         Email $email,
         DateTimeInterface $birthDate,
-        string $fName,
-        string $lName,
+        string $firstName,
+        string $lastName,
         string $street,
         string $number,
         string $province,
@@ -36,9 +36,9 @@ class Student
     ) {
         $this->watchedVideos = new WatchedVideos();
         $this->email         = $email;
-        $this->birthDate    = $birthDate;
-        $this->fName         = $fName;
-        $this->lName         = $lName;
+        $this->birthDate     = $birthDate;
+        $this->firstName     = $firstName;
+        $this->lastName      = $lastName;
         $this->street        = $street;
         $this->number        = $number;
         $this->province      = $province;
@@ -47,17 +47,17 @@ class Student
         $this->country       = $country;
     }
 
-    public function getFullName(): string
+    public function fullName(): string
     {
-        return "{$this->fName} {$this->lName}";
+        return "{$this->firstName} {$this->lastName}";
     }
 
-    public function getEmail(): string
+    public function Email(): string
     {
         return $this->email;
     }
 
-    public function getBirthDate(): DateTimeInterface
+    public function birthDate(): DateTimeInterface
     {
         return $this->birthDate;
     }
@@ -82,6 +82,6 @@ class Student
     public function age(): int
     {
         $today = new \DateTimeImmutable();
-        return $this->getBirthdate()->diff($today)->y;
+        return $this->birthDate()->diff($today)->y;
     }
 }
