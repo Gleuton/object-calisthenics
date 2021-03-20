@@ -11,7 +11,7 @@ use DateTimeInterface;
 class Student
 {
     private Email $email;
-    private DateTimeInterface $bd;
+    private DateTimeInterface $birthDate;
     private WatchedVideos $watchedVideos;
     private string $fName;
     private string $lName;
@@ -24,7 +24,7 @@ class Student
 
     public function __construct(
         Email $email,
-        DateTimeInterface $bd,
+        DateTimeInterface $birthDate,
         string $fName,
         string $lName,
         string $street,
@@ -36,7 +36,7 @@ class Student
     ) {
         $this->watchedVideos = new WatchedVideos();
         $this->email         = $email;
-        $this->bd            = $bd;
+        $this->birthDate    = $birthDate;
         $this->fName         = $fName;
         $this->lName         = $lName;
         $this->street        = $street;
@@ -51,15 +51,15 @@ class Student
     {
         return "{$this->fName} {$this->lName}";
     }
-    
+
     public function getEmail(): string
     {
         return $this->email;
     }
 
-    public function getBd(): DateTimeInterface
+    public function getBirthDate(): DateTimeInterface
     {
-        return $this->bd;
+        return $this->birthDate;
     }
 
     public function watch(Video $video, DateTimeInterface $date): void
@@ -77,5 +77,11 @@ class Student
         $today     = new DateTimeImmutable();
 
         return $firstDate->diff($today)->days < 90;
+    }
+
+    public function age(): int
+    {
+        $today = new \DateTimeImmutable();
+        return $this->getBirthdate()->diff($today)->y;
     }
 }

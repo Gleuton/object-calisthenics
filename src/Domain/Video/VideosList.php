@@ -7,7 +7,7 @@ use Countable;
 
 class VideosList implements Countable
 {
-    private array $videos;
+    private array $videos = [];
 
     public function __construct(array $videos = [])
     {

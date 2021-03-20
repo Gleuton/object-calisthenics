@@ -3,8 +3,6 @@
 namespace Alura\Calisthenics\Domain\Video;
 
 use Alura\Calisthenics\Domain\Student\Student;
-use Ds\Map;
-use Ds\Sequence;
 
 class InMemoryVideoRepository implements VideoRepository
 {
@@ -22,7 +20,6 @@ class InMemoryVideoRepository implements VideoRepository
 
     public function videosFor(Student $student): VideosList
     {
-        $today = new \DateTimeImmutable();
-        return $this->videos->videosFor($student->getBd()->diff($today)->y);
+        return $this->videos->videosFor($student->age());
     }
 }
