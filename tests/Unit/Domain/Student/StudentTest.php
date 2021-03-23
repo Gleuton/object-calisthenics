@@ -3,6 +3,7 @@
 namespace Alura\Calisthenics\Tests\Unit\Domain\Student;
 
 use Alura\Calisthenics\Domain\Email\Email;
+use Alura\Calisthenics\Domain\Student\FullName;
 use Alura\Calisthenics\Domain\Student\Student;
 use Alura\Calisthenics\Domain\Video\Video;
 use PHPUnit\Framework\TestCase;
@@ -16,8 +17,7 @@ class StudentTest extends TestCase
         $this->student = new Student(
             new Email('email@example.com'),
             new \DateTimeImmutable('1997-10-15'),
-            'Vinicius',
-            'Dias',
+            new FullName('Vinicius', 'Dias'),
             'Rua de Exemplo',
             '71B',
             'Meu Bairro',
@@ -32,7 +32,8 @@ class StudentTest extends TestCase
         self::assertTrue($this->student->hasAccess());
     }
 
-    public function testStudentWithFirstWatchedVideoInLessThan90DaysHasAccess(): void
+    public function testStudentWithFirstWatchedVideoInLessThan90DaysHasAccess(
+    ): void
     {
         $date = new \DateTimeImmutable('89 days');
         $this->student->watch(new Video(), $date);
@@ -40,7 +41,8 @@ class StudentTest extends TestCase
         self::assertTrue($this->student->hasAccess());
     }
 
-    public function testStudentWithFirstWatchedVideoInLessThan90DaysButOtherVideosWatchedHasAccess(): void
+    public function testStudentWithFirstWatchedVideoInLessThan90DaysButOtherVideosWatchedHasAccess(
+    ): void
     {
         $this->student->watch(new Video(), new \DateTimeImmutable('-89 days'));
         $this->student->watch(new Video(), new \DateTimeImmutable('-60 days'));
@@ -49,7 +51,8 @@ class StudentTest extends TestCase
         self::assertTrue($this->student->hasAccess());
     }
 
-    public function testStudentWithFirstWatchedVideoIn90DaysDoesntHaveAccess(): void
+    public function testStudentWithFirstWatchedVideoIn90DaysDoesntHaveAccess(
+    ): void
     {
         $date = new \DateTimeImmutable('-90 days');
         $this->student->watch(new Video(), $date);
@@ -57,7 +60,8 @@ class StudentTest extends TestCase
         self::assertFalse($this->student->hasAccess());
     }
 
-    public function testStudentWithFirstWatchedVideoIn90DaysButOtherVideosWatchedDoesntHaveAccess(): void
+    public function testStudentWithFirstWatchedVideoIn90DaysButOtherVideosWatchedDoesntHaveAccess(
+    ): void
     {
         $this->student->watch(new Video(), new \DateTimeImmutable('-90 days'));
         $this->student->watch(new Video(), new \DateTimeImmutable('-60 days'));
