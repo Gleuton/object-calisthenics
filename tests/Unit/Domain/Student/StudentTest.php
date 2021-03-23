@@ -2,6 +2,7 @@
 
 namespace Alura\Calisthenics\Tests\Unit\Domain\Student;
 
+use Alura\Calisthenics\Domain\Address\Address;
 use Alura\Calisthenics\Domain\Email\Email;
 use Alura\Calisthenics\Domain\Student\FullName;
 use Alura\Calisthenics\Domain\Student\Student;
@@ -18,12 +19,14 @@ class StudentTest extends TestCase
             new Email('email@example.com'),
             new \DateTimeImmutable('1997-10-15'),
             new FullName('Vinicius', 'Dias'),
-            'Rua de Exemplo',
-            '71B',
-            'Meu Bairro',
-            'Minha Cidade',
-            'Meu estado',
-            'Brasil'
+            new Address(
+                'Rua de Exemplo',
+                '71B',
+                'Meu Bairro',
+                'Minha Cidade',
+                'Meu estado',
+                'Brasil'
+            )
         );
     }
 
